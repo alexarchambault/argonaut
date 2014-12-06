@@ -6,10 +6,6 @@ import org.scalacheck._, Arbitrary._, Prop._
 import org.specs2._, org.specs2.specification._
 import Argonaut._
 
-sealed trait Shape
-case class Circle(radius: Int) extends Shape
-case class Square(side: Int) extends Shape
-
 object DecodeJsonSpecification extends Specification with ScalaCheck { def is = s2"""
 
 DecodeJson Witness Compilation
@@ -64,6 +60,8 @@ DecodeJson Auto Derivation
         "addressFields" := p.addressFields
       ).as[Person].toOption must_== Some(p))
 
+    val l = LabelledGeneric[Shape]
+    
     DecodeJson.of[Shape]
 
     def sums = prop((s: Shape) =>
